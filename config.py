@@ -15,7 +15,7 @@ class Config(object):
     API_ID = int(os.environ.get("API_ID", 27612834))
     API_HASH = os.environ.get("API_HASH", "28d176c899b65da009467232171d60f9")
     #Proxy url leave blank if dont have, eg "http://13.42.34.52:52380"
-    PROXY = os.environ.get("PROXY", "")
+    PROXY = os.environ.get("PROXY", "http://59.144.184.73:80")
     #mongodb url get it from mongodb.com
     DB_URL = os.environ.get("DB_URL", "mongodb+srv://animebash32:animebash3222@cluster0.tcey822.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0")
     #owner id
