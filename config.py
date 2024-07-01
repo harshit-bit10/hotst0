@@ -12,16 +12,16 @@ class Config(object):
     #tg bot token
     BOT_TOKEN = os.environ.get("BOT_TOKEN", "7369126743:AAEaysZ7E0k-CB2DeWuOePmWamDytWQc09Y")
     #api id and hash get it from my.telegram.org
-    API_ID = int(os.environ.get("API_ID", 27612834))
-    API_HASH = os.environ.get("API_HASH", "28d176c899b65da009467232171d60f9")
+    API_ID = int(os.environ.get("API_ID", 27190467))
+    API_HASH = os.environ.get("API_HASH", "ff6bc6ad2faba520f426cf04ca7f5773")
     #Proxy url leave blank if dont have, eg "http://13.42.34.52:52380"
     PROXY = os.environ.get("PROXY", "http://41.45.136.193:8080")
     #mongodb url get it from mongodb.com
     DB_URL = os.environ.get("DB_URL", "mongodb+srv://animebash32:animebash3222@cluster0.tcey822.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0")
     #owner id
-    OWNER_ID = [int(i) for i in  os.environ.get("OWNER_ID", "5574593875").split(" ")]
+    OWNER_ID = [int(i) for i in  os.environ.get("OWNER_ID", "6066102279").split(" ")]
     #log channel, where to send logs
-    LOG_CHANNEL = int(os.environ.get("LOG_CHANNEL", "-1002200330916"))
+    LOG_CHANNEL = int(os.environ.get("LOG_CHANNEL", "-1002160780409"))
     #gdrive folder id for upload
     GDRIVE_FOLDER_ID = os.environ.get("GDRIVE_FOLDER_ID", "1-geGQG9k7_idJ0876uDYqTe")
     #use service accounts or not, used to bypass daily upload limit
