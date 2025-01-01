@@ -17,7 +17,6 @@ from config import Config
 from jvdb import mydb
 from pytz import timezone
 from psutil import virtual_memory, cpu_percent
-from jvdrive import GoogleDriveHelper
 from util import *
 from jvripper import *
 from logging.handlers import RotatingFileHandler
