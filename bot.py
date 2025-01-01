@@ -15,7 +15,6 @@ import logging
 import shutil
 from config import Config
 from jvdb import mydb
-from jvdrive import GoogleDriveHelper
 from pytz import timezone
 from psutil import virtual_memory, cpu_percent
 from util import *
@@ -390,38 +389,7 @@ If you found any issue please contact Support @JV**
 **Bot Uptime:**  `{strftime("hours:%H minutes:%M and seconds:%S" , gmtime(time() - BOT_START_TIME))} ago`""", reply_markup=InlineKeyboardMarkup(ST1))
                    
 
-async def upload_to_gdrive(bot, input_str, sts_msg, message):
-    if os.path.isdir(input_str) and len(getListOfFiles(input_str)) == 0:
-        return
-    up_dir, up_name = input_str.rsplit('/', 1)
-    gdrive = GoogleDriveHelper(up_name, up_dir, bot.loop, sts_msg)
-    size = get_path_size(input_str)
-    success = await sync_to_async(bot.loop, gdrive.upload, up_name, size)
-    msg = sts_msg.reply_to_message if sts_msg.reply_to_message else sts_msg
-    if isinstance(success, str):
-        return
-    if success:
-        url_path = quote(f'{up_name}')
-        share_url = f'{Config.INDEX_LINK}/{url_path}'
-        if success[3] == "Folder":
-            share_url += '/'
-        sent = await msg.reply_text(
-            f"""**File Name:** `{success[4]}`
-**Size:** `{humanbytes(success[1])}`
-**Type:** `{success[3]}`
-**Total Files:** `{success[2]}`
-
-**CC**: {message.from_user.mention}
-""",
-            reply_markup=InlineKeyboardMarkup([[
-                InlineKeyboardButton(text="❤️‍🔥 Cloud Link", url=success[0]),
-                InlineKeyboardButton(text="⚡ Index Link", url=share_url)]]
-                                ),
-            disable_web_page_preview=True
-          )
-        await sent.copy(chat_id=Config.LOG_CHANNEL)
-    else:
-        await msg.reply_text("😔 Upload failed to gdrive")
+    
 
         
 @TGBot.on_message(filters.command("unauth") & filters.user(Config.OWNER_ID))
