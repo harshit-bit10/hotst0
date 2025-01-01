@@ -1,8 +1,3 @@
-# Decompiled with PyLingual (https://pylingual.io)
-# Internal filename: jvdrive.py
-# Bytecode version: 3.11a7e (3495)
-# Source timestamp: 2023-11-21 09:11:32 UTC (1700557892)
-
 from logging import getLogger, ERROR
 from time import time
 from pickle import load as pload
@@ -19,6 +14,7 @@ from asyncio import sleep
 import magic
 from util import humanbytes, TimeFormatter, setInterval, getListOfFiles
 from config import Config
+
 GLOBAL_EXTENSION_FILTER = ('.aria', '.aria2c', '_jv.mp4')
 LOGGER = getLogger(__name__)
 getLogger('googleapiclient.discovery').setLevel(ERROR)
@@ -122,7 +118,7 @@ class GoogleDriveHelper:
 
             if ospath.exists('token.pickle'):
                 LOGGER.info('Authorize with token.pickle')
-                with open('token.pickle', 'rb') as f:
+ with open('token.pickle', 'rb') as f:
                     credentials = pload(f)
 
                 LOGGER.error('token.pickle not found!')
@@ -143,7 +139,7 @@ class GoogleDriveHelper:
         if self.__sa_index == self.__sa_number - 1:
             self.__sa_index = 0
 
-            self.__sa_index += 1
+        self.__sa_index += 1
         self.__sa_count += 1
         LOGGER.info(f'Switching to {self.__sa_index} index')
         self.__service = self.__authorize()
@@ -221,7 +217,7 @@ class GoogleDriveHelper:
 
                 mime_type = 'Folder'
                 if len(getListOfFiles(item_path)) == 0:
-                    LOGGER.info(f'Skipping upload of {ospath.abspath(file_name)} bcz its empty')
+                    LOGGER.info(f'Skipping upload of {ospath.abspath(file_name)} because it's empty')
                     return 'skip'
 
                 dir_id = self.__create_directory(ospath.basename(ospath.abspath(file_name)), Config.GDRIVE_FOLDER_ID)
@@ -240,17 +236,17 @@ class GoogleDriveHelper:
             LOGGER.exception(err)
             raise Exception(err)
 
-                LOGGER.info(f'Uploaded To G-Drive: {file_name}')
-            self.__updater.cancel()
-            if not self.__is_cancelled or self.__is_errored or mime_type == 'Folder':
-                LOGGER.info('Deleting uploaded data from Drive...')
-                link = self.__G_DRIVE_DIR_BASE_DOWNLOAD_URL.format(dir_id)
-                self.deletefile(link)
-                return None
-            if self.__is_errored:
-                return
-            self.done = True
-            return (link, size, self.__total_files, mime_type, file_name)
+        LOGGER.info(f'Uploaded To G-Drive: {file_name}')
+        self.__updater.cancel()
+        if not self.__is_cancelled or self.__is_errored or mime_type == 'Folder':
+            LOGGER.info('Deleting uploaded data from Drive...')
+            link = self.__G_DRIVE_DIR_BASE_DOWNLOAD_URL.format(dir_id)
+            self.deletefile(link)
+            return None
+        if self.__is_errored:
+            return
+        self.done = True
+        return (link, size, self.__total_files, mime_type, file_name)
 
     def __upload_dir(self, input_directory, dest_id):
         list_dirs = listdir(input_directory)
@@ -284,12 +280,12 @@ class GoogleDriveHelper:
             return None
         for file in response.get('files', []):
             mime_type = file.get('mimeType')
-            if file.get('name', '')!= dir_name:
+            if file.get('name', '') != dir_name:
                 continue
             if mime_type == self.__G_DRIVE_DIR_MIME_TYPE:
                 return file.get('id')
 
-            return None
+        return None
 
     @retry(wait=wait_exponential(multiplier=2, min=3, max=6), stop=stop_after_attempt(3), retry=retry_if_exception_type(Exception))
     def __create_directory(self, directory_name, dest_id):
@@ -308,7 +304,7 @@ class GoogleDriveHelper:
         file_metadata = {'name': file_name, 'description': 'Uploaded by bot', 'mimeType': mime_type}
         if dest_id is not None:
             file_metadata['parents'] = [dest_id]
-        if ospath.getsize(file_path) == 0:
+        if ospath.getsize(file_path) ==  0:
             media_body = MediaFileUpload(file_path, mimetype=mime_type, resumable=False)
             response = self.__service.files().create(body=file_metadata, media_body=media_body, supportsAllDrives=True).execute()
             if not Config.IS_TEAM_DRIVE:
@@ -338,8 +334,8 @@ class GoogleDriveHelper:
                     self.__switchServiceAccount()
                     LOGGER.info(f'Got: {reason}, Trying Again.')
                     return self.__upload_file(file_path, file_name, mime_type, dest_id)
-                    LOGGER.error(f'Got: {reason}')
-                    raise err
+                LOGGER.error(f'Got: {reason}')
+                raise err
         if self.__is_cancelled:
             return
         try:
