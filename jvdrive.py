@@ -223,7 +223,7 @@ class GoogleDriveHelper:
                 if len(getListOfFiles(item_path)) == 0:
                     LOGGER.info(f'Skipping upload of {ospath.abspath(file_name)} bcz its empty')
                     return 'skip'
-            else:  # inserted
+
                 dir_id = self.__create_directory(ospath.basename(ospath.abspath(file_name)), Config.GDRIVE_FOLDER_ID)
                 result = self.__upload_dir(item_path, dir_id)
                 if result is None:
