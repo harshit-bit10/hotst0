@@ -1,9 +1,29 @@
-FROM python:3.9
+# Use an official Ubuntu as a base image
+FROM ubuntu:20.04
 
-RUN apt -qq update && apt -qq install -y git wget ffmpeg
- 
-COPY . . 
+# Install dependencies
+RUN apt-get update && apt-get install -y \
+    git \
+    cmake \
+    make \
+    build-essential \
+    mediainfo \
+    ffmpeg \
+    mkvtoolnix \
+    && rm -rf /var/lib/apt/lists/*
 
-RUN pip3 install -r requirements.txt 
+# Clone the Bento4 repository
+RUN git clone https://github.com/axiomatic-systems/Bento4.git /opt/Bento4
 
-CMD ["bash","bento4.sh"]
+# Build Bento4
+WORKDIR /opt/Bento4
+RUN mkdir cmakebuild && cd cmakebuild && \
+    cmake -DCMAKE_BUILD_TYPE=Release .. && \
+    make && \
+    make install
+
+# Set environment variables if needed
+ENV PATH="/opt/Bento4/bin:${PATH}"
+
+# Set the default command (optional)
+CMD ["bash"]
