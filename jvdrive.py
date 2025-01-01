@@ -119,12 +119,12 @@ class GoogleDriveHelper:
             self.__sa_index = randrange(self.__sa_number)
             LOGGER.info(f'Authorizing with {json_files[self.__sa_index]} service account')
             credentials = service_account.Credentials.from_service_account_file(f'accounts/{json_files[self.__sa_index]}', scopes=self.__OAUTH_SCOPE)
-        else:  # inserted
+
             if ospath.exists('token.pickle'):
                 LOGGER.info('Authorize with token.pickle')
                 with open('token.pickle', 'rb') as f:
                     credentials = pload(f)
-            else:  # inserted
+
                 LOGGER.error('token.pickle not found!')
         return build('drive', 'v3', credentials=credentials, cache_discovery=False)
 
@@ -142,7 +142,7 @@ class GoogleDriveHelper:
     def __switchServiceAccount(self):
         if self.__sa_index == self.__sa_number - 1:
             self.__sa_index = 0
-        else:  # inserted
+
             self.__sa_index += 1
         self.__sa_count += 1
         LOGGER.info(f'Switching to {self.__sa_index} index')
@@ -218,7 +218,7 @@ class GoogleDriveHelper:
                 if link is None:
                     raise Exception('Upload has been manually cancelled')
                 LOGGER.info(f'Uploaded To G-Drive: {item_path}')
-            else:  # inserted
+
                 mime_type = 'Folder'
                 if len(getListOfFiles(item_path)) == 0:
                     LOGGER.info(f'Skipping upload of {ospath.abspath(file_name)} bcz its empty')
@@ -239,7 +239,7 @@ class GoogleDriveHelper:
             self.__is_errored = True
             LOGGER.exception(err)
             raise Exception(err)
-            else:  # inserted
+
                 LOGGER.info(f'Uploaded To G-Drive: {file_name}')
             self.__updater.cancel()
             if not self.__is_cancelled or self.__is_errored or mime_type == 'Folder':
@@ -263,14 +263,14 @@ class GoogleDriveHelper:
                 current_dir_id = self.__create_directory(item, dest_id)
                 new_id = self.__upload_dir(current_file_name, current_dir_id)
                 self.__total_folders += 1
-            else:  # inserted
+
                 if not item.lower().endswith(tuple(GLOBAL_EXTENSION_FILTER)):
                     mime_type = self.get_mime_type(current_file_name)
                     file_name = current_file_name.split('/')[(-1)]
                     self.__upload_file(current_file_name, file_name, mime_type, dest_id)
                     self.__total_files += 1
                     new_id = dest_id
-                else:  # inserted
+
                     osremove(current_file_name)
                     new_id = 'filter'
             if self.__is_cancelled:
@@ -288,7 +288,7 @@ class GoogleDriveHelper:
                 continue
             if mime_type == self.__G_DRIVE_DIR_MIME_TYPE:
                 return file.get('id')
-        else:  # inserted
+
             return None
 
     @retry(wait=wait_exponential(multiplier=2, min=3, max=6), stop=stop_after_attempt(3), retry=retry_if_exception_type(Exception))
