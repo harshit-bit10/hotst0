@@ -8,7 +8,7 @@ class Config(object):
     ##API_KEY get it from dev, dont edit if added
     API_KEY = os.environ.get("API_KEY", "6607cc1ef9e03346e48c886d")
     #telegram user session str for 4gb limit
-    SESSION_STRING = os.environ.get("SESSION_STRING", "BQGlVqIAaQCW7onbtdCbesyxExwOHWBZeA-bYLODgc95BpZSiHbwqGA0CC8_9EDtVxhSjDnAlLRGO3wM-oFp4CGEWCIn1Q996Xz4jCAlXPbc4eHRI06yRuuE3K_rd1uuBoL2IrdDaOA3447-dwVkdWRhH2yYrisu0NhFPEX4tXORVGhAw6NJSv5wjZ1-wzsRZZFHpTsCPSr8RybxCOWYiBZUpjNc1JPkNBPgr1KU4XOQbvjU2wen751Sbl-_8-Mcr1HRx-p37sYOqpbikMyhOb4hYEdZHmx09j7BIqyYp5tcqJGhffFnl0P2evPUlxgNh-wuwUIZbGQ8b7rHWdaRbQ-Bb1q0AQAAAAGKB0kwAA")
+    SESSION_STRING = os.environ.get("SESSION_STRING", "None")
     #tg bot token
     BOT_TOKEN = os.environ.get("BOT_TOKEN", "7267043935:AAHm06WEFwn0j8ICq3AG1SROyuaFAw2vHiI")
     #api id and hash get it from my.telegram.org
@@ -17,11 +17,11 @@ class Config(object):
     #Proxy url leave blank if dont have, eg "http://13.42.34.52:52380"
     PROXY = os.environ.get("PROXY", "http://41.45.136.193:8080")
     #mongodb url get it from mongodb.com
-    DB_URL = os.environ.get("DB_URL", "mongodb+srv://animebash32:animebash3222@cluster0.tcey822.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0")
+    DB_URL = os.environ.get("DB_URL", "mongodb+srv://boldenisgolden:HrnsnoC1qvpWzMcY@cluster0.6bow1.mongodb.net/")
     #owner id
     OWNER_ID = [int(i) for i in  os.environ.get("OWNER_ID", "6066102279").split(" ")]
     #log channel, where to send logs
-    LOG_CHANNEL = int(os.environ.get("LOG_CHANNEL", "-1002160780409"))
+    LOG_CHANNEL = int(os.environ.get("LOG_CHANNEL", "-1002128693617"))
     #gdrive folder id for upload
     GDRIVE_FOLDER_ID = os.environ.get("GDRIVE_FOLDER_ID", "1-geGQG9k7_idJ0876uDYqTe")
     #use service accounts or not, used to bypass daily upload limit
