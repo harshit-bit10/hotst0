@@ -15,6 +15,7 @@ import logging
 import shutil
 from config import Config
 from jvdb import mydb
+from jvdrive import GoogleDriveHelper
 from pytz import timezone
 from psutil import virtual_memory, cpu_percent
 from util import *
